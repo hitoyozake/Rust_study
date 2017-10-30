@@ -1,0 +1,6 @@
+[package]
+name = "read_csv"
+version = "0.1.0"
+authors = ["hitoyozake <mikoto_1122@yahoo.co.jp>"]
+
+[dependencies]
