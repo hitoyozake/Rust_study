@@ -4,26 +4,28 @@ use std::io::prelude::*;
 use std::path::Path;
 
 extern crate csv;
+//extern crate serde;
 
 fn read_csv(){
 
    let people = vec![
        ("Yamada", "Taro", 1990),
        ("Sato", "Jiro", 1920),
-       
         ("Yoshida", "Osamu", 1993),
    ];
 
    let mut writer = csv::Writer::from_path("sample.csv").unwrap();
 
    for row in people{
-       writer.write_record(&row)?;
+       writer.serialize(row);       
    }
+       
 }
 
 
 
 fn main() {
+    read_csv();
     println!("Hello, world!");
 
     read_csv();
