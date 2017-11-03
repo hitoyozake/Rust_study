@@ -11,17 +11,19 @@ fn read_csv(){
    let people = vec![
        ("Yamada", "Taro", 1990),
        ("Sato", "Jiro", 1920),
-        ("Yoshida", "Osamu", 1993),
+       ("Yoshida", "Osamu", 1993),
    ];
 
    let mut writer = csv::Writer::from_path("sample.csv").unwrap();
+
+   //headerのserialize
+   writer.serialize(("FirstName", "SecondName", "birth year"));
 
    for row in people{
        writer.serialize(row);       
    }
        
 }
-
 
 
 fn main() {
