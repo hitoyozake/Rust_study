@@ -4,3 +4,4 @@ version = "0.1.0"
 authors = ["hitoyozake <mikoto_1122@yahoo.co.jp>"]
 
 [dependencies]
+csv = "1.0.0-beta.5"
