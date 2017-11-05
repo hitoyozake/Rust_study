@@ -1,0 +1,8 @@
+[package]
+name = "hyper_practice"
+version = "0.1.0"
+authors = ["hitoyozake <mikoto_1122@yahoo.co.jp>"]
+
+[dependencies]
+tokio-core = "0.1"
+hyper = "*"
