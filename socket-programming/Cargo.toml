@@ -4,3 +4,9 @@ version = "0.1.0"
 authors = ["hitoyozake <mikoto_1122@yahoo.co.jp>"]
 
 [dependencies]
+log = "0.4"
+env_logger = "0.6.1"
+failure = "0.1.5"
+
+
+
