@@ -10,12 +10,12 @@ pub fn serve2(address: &str)->Result<(), failure::Error> {
     loop {
         let mut buffer = [ 0u8; 1024];
 
-        let (size, src) = server_socket.recv_from(&mut buf)?;
+        let (size, src) = server_socket.recv_from(&mut buffer)?;
 
-        debug! ("Handling data from {}", src)
+        debug! ("Handling data from {}", src);
 
-        print!("{}", str::from_utf8(buf[..size])?);
-        server_socket.send_to(&buf, src)?;
+        print!("{}", str::from_utf8(& buffer[..size])?);
+        server_socket.send_to(&buffer, src)?;
 
     }
 }  
