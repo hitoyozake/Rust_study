@@ -6,7 +6,7 @@ pub fn connect(address: &str) -> Result<(), failure::Error>{
     let mut stream = TcpStream::connect(address);
 
     loop {
-        // 入力データをソケットから送信
+        // 蜈･蜉帙ョ繝ｼ繧ｿ繧偵た繧ｱ繝�繝医°繧蛾∽ｿ｡
         let mut input = stream.new();
 
         io::stdin().read_line(&mut input)?;
