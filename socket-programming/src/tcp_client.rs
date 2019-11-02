@@ -3,14 +3,14 @@ use std::net::TcpStream;
 use std::str;
 
 pub fn connect(address: &str) -> Result<(), failure::Error>{
-    let mut stream = TcpStream::connect(address);
+    let mut stream = TcpStream::connect(address)?;
 
     loop {
         // 入力データをソケットから送信
-        let mut input = stream.new();
+        let mut input = String::new();
 
         io::stdin().read_line(&mut input)?;
-        stream.write_all(input.asbytes())?;
+        stream.write_all(input.as_bytes())?;
 
         let mut reader = BufReader::new(&stream);
         let mut buffer = Vec::new();
