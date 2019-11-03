@@ -16,6 +16,7 @@ pub fn communicate(address: &str) -> Result<(), failure::Error>{
 
         print!(
             "{}",
+            
             str::from_utf8(&buffer).expect("failed to convert to String")
         );
     }
