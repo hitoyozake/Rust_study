@@ -6,6 +6,15 @@ use pnet::packet::tcp::TcpFlags;
 use std::net::Ipv4Addr;
 use std::fs;
 use std::collections::HashMap;
+use std::any::type_name;
+use pnet::*;
+use pnet::transport::*;
+use pnet::packet::ip::*;
+
+
+fn print_typename<T>(_: &T){
+    println!("{}", std::any::type_name::<T>());
+}
 
 struct PacketInfo {
     my_ipaddr: Ipv4Addr,
@@ -34,10 +43,14 @@ fn main() {
 
     let args: Vec<String> = env::args().collect();
 
+    print_typename(&args);
+
     if args.len() != 3 {
         error!("Bad number of arguments. [ippaddr] [scantype]");
         process::exit(1);
     }
+
+
 
     let packet_info = {
         let contents = fs::read_to_string("env.").expect("Failed to read env file");
@@ -71,4 +84,12 @@ fn main() {
             },
         }
     };
+
+    //トランスポート層のチャンネルを開く
+    let (mut ts, mut tr) = transport::transport_channel(
+        1024,
+        TransportChannelType::Layer4(TransportProtocol::Ipv4(IpNextHeaderProtocols::Tcp)),
+    ).expect("Failed to open channel");
+
+
 }
