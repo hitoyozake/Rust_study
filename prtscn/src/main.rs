@@ -90,6 +90,27 @@ fn main() {
         1024,
         TransportChannelType::Layer4(TransportProtocol::Ipv4(IpNextHeaderProtocols::Tcp)),
     ).expect("Failed to open channel");
+}
 
+let TCP_SIZE = 1024;
 
+fn build_packet(packet_info: &Packet) -> [u8; TCP_SIZE]{
+    // build TCP Header
+
+    let mut tcp_buffer = [0u8; TCP_SIZE];
+    let mut tcp_header = MutableTcpPacket::new(&mut tcp_buffer[..]).unwrap();
+    tcp_header.set_source(packet_info.my_port);
+
+    // オプションを含まないので20オクテットまでがTCOヘッダ．4オクテット単位で指定する
+    tcp_header.set_data_offset(5);
+    tcp_header.set_flags(packet_info.scan_type as u16);
+
+    let checksum = tcp::ipv4_checksum(
+        &tcp_header.to_immutable().
+        &packet_info.my_ipaddr,
+        &packet_info.target_ipaddr,
+    );
+    tcp_header.set_checksum(checksum);
+
+    tcp_buffer
 }
