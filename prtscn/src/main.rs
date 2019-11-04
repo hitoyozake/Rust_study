@@ -10,7 +10,11 @@ use std::any::type_name;
 use pnet::*;
 use pnet::transport::*;
 use pnet::packet::ip::*;
+use pnet::packet::tcp::*;
+use pnet::packet::*;
 
+
+const TCP_SIZE: usize = 1024;
 
 fn print_typename<T>(_: &T){
     println!("{}", std::any::type_name::<T>());
@@ -92,11 +96,9 @@ fn main() {
     ).expect("Failed to open channel");
 }
 
-let TCP_SIZE = 1024;
 
-fn build_packet(packet_info: &Packet) -> [u8; TCP_SIZE]{
+fn build_packet(packet_info: &PacketInfo) -> [u8; TCP_SIZE]{
     // build TCP Header
-
     let mut tcp_buffer = [0u8; TCP_SIZE];
     let mut tcp_header = MutableTcpPacket::new(&mut tcp_buffer[..]).unwrap();
     tcp_header.set_source(packet_info.my_port);
@@ -106,7 +108,7 @@ fn build_packet(packet_info: &Packet) -> [u8; TCP_SIZE]{
     tcp_header.set_flags(packet_info.scan_type as u16);
 
     let checksum = tcp::ipv4_checksum(
-        &tcp_header.to_immutable().
+        &tcp_header.to_immutable(),
         &packet_info.my_ipaddr,
         &packet_info.target_ipaddr,
     );
