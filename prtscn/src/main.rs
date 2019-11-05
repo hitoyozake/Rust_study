@@ -57,7 +57,7 @@ fn main() {
 
 
     let packet_info = {
-        let contents = fs::read_to_string("env.").expect("Failed to read env file");
+        let contents = fs::read_to_string(".env").expect("Failed to read env file");
 
         let lines: Vec<_> = contents.split('\n').collect();
 
@@ -89,11 +89,19 @@ fn main() {
         }
     };
 
+    println!("open!!");
+
     //トランスポート層のチャンネルを開く
     let (mut ts, mut tr) = transport::transport_channel(
         1024,
         TransportChannelType::Layer4(TransportProtocol::Ipv4(IpNextHeaderProtocols::Tcp)),
     ).expect("Failed to open channel");
+
+    reyon::join( 
+        || send_packet( &mut ts, &packet_info),
+        || receive_packets(&mut tr, &packet_info),
+        || receive_packets(&mut tr, &packet_info),
+    );
 }
 
 
@@ -184,6 +192,9 @@ fn receive_packets(
             }
             _=>{}
         }
+        //処理の終了
         return Ok(());
     }
 }
+
+
