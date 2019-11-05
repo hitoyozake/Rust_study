@@ -163,6 +163,7 @@ fn receive_packets(
             Err(_) => continue,
         };
 
+
         let target_port = tcp_packet.get_source();
 
         match packet_info.scan_type {
