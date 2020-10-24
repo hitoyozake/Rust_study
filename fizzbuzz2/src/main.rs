@@ -5,12 +5,7 @@ fn read<T: std::str::FromStr>() -> T {
     s.trim().parse().ok().unwrap()
 }
 
-
-fn main() {
-    let s: String = read();
-    let n: i32 = s.parse().ok().unwrap();
-
-    println!("{}", n);
+fn fizzbuzz(n : i32){
 
     for i in 0..=n{
         let s:String = if i%15 == 0 {
@@ -25,5 +20,16 @@ fn main() {
 
         println!("{}", s);
     }
-
 }
+
+
+fn main() {
+    let s: String = read();
+    let n: i32 = s.parse().ok().unwrap();
+
+    fizzbuzz(n);
+}
+
+
+
+
