@@ -15,6 +15,7 @@ fn calc_data(data: String) -> String {
 }
 
 // 参照にするとmoveではなくなる
+// 参照を渡す方法を借用という
 fn calc_dataref(data: &String){
     println!("{} @ calcDataRef", data);
 }
