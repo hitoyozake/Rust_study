@@ -6,12 +6,15 @@ use std::sync::{Arc, Mutex}; // これは use std::sync::Mutexとuse std::sync::
 use std::sync::mpsc;
 fn main(){
     let (tx, rx) = mpsc::channel();
+
+    //このタイミングでsendしても問題なし．キューに追加される
+    let _ = tx.send("Hello, world!");
+
     let handle = thread::spawn(move || {
         let data = rx.recv().unwrap();
         println!("{}", data);
     });
 
-    let _ = tx.send("Hello, world!");
 
     let _ = handle.join();
 }
