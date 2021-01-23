@@ -17,8 +17,18 @@ fn main(){
 
         // let y = &x; let z = &mut x; // error: 可変と不変の参照渡しの両方を保つことはできない 
         // let mut y = &mut x; // let z = &mut x; // error : 可変な参照渡しは１個まで
+        dbg!(y);
+        dbg!(x);
     }
    
+    {
+        let mut y = & mut x; // yの寿命はここで尽きる
+        let z = & x;
+
+        dbg!(z);
+        dbg!(x);
+
+    }
     
 }
 
