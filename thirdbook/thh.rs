@@ -31,4 +31,14 @@ fn main(){
     let t = make_tuple( 1, 2 );
 
     println!("t.0: {}, t.1: {}", t.0, t.1);
+
+    let closure  = | x: i32 | {
+        x*2
+    };
+
+    let y = closure(4);
+
+    println!("{}", y);
+
 }
+
