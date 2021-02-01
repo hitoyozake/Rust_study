@@ -53,7 +53,18 @@ fn something_gread_async_function2()->impl Future<Output = i32>{
     }
 }
 
+fn move_to_async_block()->impl Future<Output = ()>{
+    let outside_variable = "This is Outside".to_string();
+
+    //通常はここで outside_variable の所有権がなくなるのでコンパイルが通らない
+    async move{
+        // move で所有権をasyncブロックの中に移す．これによりブロックの中でも使用できるようにした
+        println!("{}", outside_variable);
+    }
+}
+
 fn main(){
     executor::block_on(something_great_async_function());   
     executor::block_on(something_gread_async_function2());
+    executor::block_on(move_to_async_block());
 }
