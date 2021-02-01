@@ -36,6 +36,7 @@ async fn async_add(a: i32, b: i32)->i32{
     a+b
 }
 
+
 async fn something_great_async_function()->i32{
     let ans = async_add(2, 3).await;
 
@@ -43,6 +44,16 @@ async fn something_great_async_function()->i32{
     ans
 }
 
+fn something_gread_async_function2()->impl Future<Output = i32>{
+    async {
+        let ans = async_add(2, 3).await; // awaitはasyncの中でのみ使用可能
+
+        println!("{}", ans);
+        ans
+    }
+}
+
 fn main(){
     executor::block_on(something_great_async_function());   
+    executor::block_on(something_gread_async_function2());
 }
