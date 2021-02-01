@@ -25,6 +25,4 @@ fn main(){
 
     println!("{}", result);
 
-
-
 }

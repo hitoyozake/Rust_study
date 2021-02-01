@@ -20,14 +20,29 @@ impl Future for CountDown{
     }
 }
 
-fn main(){
+fn mainx(){
 
     let countdown_future1 = CountDown(10);
     let countdown_future2 = CountDown(20);
     
     let cd_set = join_all(vec![countdown_future1, countdown_future2]);
     let res = executor::block_on(cd_set);
-    for(i , s) in res.iter().enumrate(){
+    for(i , s) in res.iter().enumerate(){
         println!("{}: {}", i, s);
     }
+}
+
+async fn async_add(a: i32, b: i32)->i32{
+    a+b
+}
+
+async fn something_great_async_function()->i32{
+    let ans = async_add(2, 3).await;
+
+    println!("{}", ans);
+    ans
+}
+
+fn main(){
+    executor::block_on(something_great_async_function());   
 }

@@ -21,7 +21,7 @@ fn main(){
     let mut v = read_splited::<i64>();
 
     let mut count = 0;
-    for mut i in v.iter_mut() {
+    for mut i in v.iter() {
         
         loop{
             let is_even = *i % 2 == 0;
