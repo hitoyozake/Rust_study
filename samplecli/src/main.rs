@@ -1,5 +1,7 @@
 use std::env;
 use clap::{App, Arg, Clap};
+use std::io::{BufRead, BufReader};
+use std::fs::File;
 
 #[derive(Clap, Debug)]
 #[clap(
@@ -17,8 +19,24 @@ struct Opts {
     formula_file: Option<String>,
 }
 
-
 fn main(){
+    let opts = Opts::parse();
+
+    if let Some(path) = opts.formula_file{
+        let f = File::open(path).unwrap();
+        let reader = BufReader::new(f);
+
+        for line in reader.lines(){
+            let line = line.unwrap();
+            println!("{}", line);
+        }
+    } else {
+        println!("No file is specified!");
+    }
+}
+
+
+fn main2(){
     /*
     //builders pattern
     let matches = App::new("My RPN progr")
