@@ -7,6 +7,11 @@ async fn index() -> Result<HttpResponse, actix_web::Error> {
     Ok(HttpResponse::Ok().body(response_body))
 }
 
-fn main() {
-    println!("Hello, world!");
+#[actix_rt::main]
+async fn main() -> Result<(), actix_web::Error> {
+    HttpServer::new(move || App::new().service(index))
+    .bind("0.0.0.0:8091")?
+    .run()
+    .await?;
+    Ok(())
 }
